@@ -1,0 +1,2 @@
+172.19.0.15 - - [09/Apr/2021:06:47:56 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 500 234
+172.19.0.15 - - [09/Apr/2021:09:40:29 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 500 335

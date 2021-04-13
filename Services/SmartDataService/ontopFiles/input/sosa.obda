@@ -1,0 +1,79 @@
+[PrefixDeclaration]
+:		http://auto.tuwien.ac.at/sic/PETIont#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+foaf:		http://xmlns.com/foaf/0.1/
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+skos:		http://www.w3.org/2004/02/skos/core#
+sosa:		http://www.w3.org/ns/sosa/
+time:		http://www.w3.org/2006/time#
+vann:		http://purl.org/vocab/vann/
+voaf:		http://purl.org/vocommons/voaf#
+schema:		http://schema.org/
+dcterms:		http://purl.org/dc/terms/
+
+[MappingDeclaration] @collection [[
+mappingId	createSensors
+target		:{name} a sosa:Sensor . 
+source		Select "name"
+			from "sensorNames"
+
+mappingId	createActators
+target		:{name} a sosa:Actuator . 
+source		SELECT name
+			FROM "actuatorNames"
+
+mappingId	createObservations_m_in
+target		sosa:m_in/{index} a sosa:Observation ; sosa:hasSimpleResult {m_in} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :m_in . :m_in sosa:madeObservation sosa:m_in/{index} . 
+source		Select index, timestamp, m_in
+			FROM "sensorreadings"
+
+mappingId	createObservation_T_hx
+target		sosa:T_hx/{index} a sosa:Observation ; sosa:hasSimpleResult {T_hx} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :T_hx . :T_hx sosa:madeObservation sosa:T_hx/{index} . 
+source		Select index, timestamp, T_hx
+			FROM "sensorreadings"
+
+mappingId	createObservation_T_sup
+target		sosa:T_sup/{index} a sosa:Observation ; sosa:hasSimpleResult {T_sup} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :T_sup . :T_sup sosa:madeObservation sosa:T_sup/{index} . 
+source		Select index, timestamp, T_sup
+			FROM "sensorreadings"
+
+mappingId	createObservation_m_out
+target		sosa:m_out/{index} a sosa:Observation ; sosa:hasSimpleResult {m_out} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :m_out . :m_out sosa:madeObservation sosa:m_out/{index} . 
+source		Select index, timestamp, m_out
+			FROM "sensorreadings"
+
+mappingId	createObservation_T_in
+target		sosa:T_in/{index} a sosa:Observation ; sosa:hasSimpleResult {T_in} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :T_in . :T_in sosa:madeObservation sosa:T_in/{index} . 
+source		Select index, timestamp, T_in
+			FROM "sensorreadings"
+
+mappingId	createObservation_T_ext
+target		sosa:T_ext/{index} a sosa:Observation ; sosa:hasSimpleResult {T_ext} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :T_ext . :T_ext sosa:madeObservation sosa:T_ext/{index} . 
+source		Select index, timestamp, T_ext
+			FROM "sensorreadings"
+
+mappingId	createObservation_T_p
+target		sosa:T_p/{index} a sosa:Observation ; sosa:hasSimpleResult {T_p} ; sosa:resultTime {timestamp} ; sosa:madeBySensor :T_p . :T_p sosa:madeObservation sosa:T_p/{index} . 
+source		Select index, timestamp, T_p
+			FROM "sensorreadings"
+
+mappingId	createActuation_Actuator_H1
+target		sosa:Actuator_H1/{index} a sosa:Actuation ; sosa:hasSimpleResult {Actuator_H1} ; sosa:resultTime {timestamp} ; sosa:madeByActuator :Actuator_H1 . :Actuator_H1 sosa:madeActuation sosa:Actuator_H1/{index} . 
+source		Select index, timestamp, Actuator_H1
+			FROM "sensorreadings"
+
+mappingId	createActuation_Actuator_Fan1
+target		sosa:Actuator_Fan1/{index} a sosa:Actuation ; sosa:hasSimpleResult {Actuator_Fan1} ; sosa:resultTime {timestamp} ; sosa:madeByActuator :Actuator_Fan1 . :Actuator_Fan1 sosa:madeActuation sosa:Actuator_Fan1/{index} . 
+source		Select index, timestamp, Actuator_Fan1
+			FROM "sensorreadings"
+
+mappingId	creatActuation_Actuator_Fan2
+target		sosa:Actuator_Fan2/{index} a sosa:Actuation ; sosa:hasSimpleResult {Actuator_Fan2} ; sosa:resultTime {timestamp} ; sosa:madeByActuator :Actuator_Fan2 . :Actuator_Fan2 sosa:madeActuation sosa:Actuator_Fan2/{index} . 
+source		Select index, timestamp, Actuator_Fan2
+			FROM "sensorreadings"
+]]
+

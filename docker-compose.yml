@@ -1,0 +1,291 @@
+version: '3.4'
+
+networks:
+  docker_network:
+    driver: bridge
+
+volumes:
+  zeebe_data:
+  zeebe_elasticsearch_data:
+
+services:
+#-----------------------------------------------KAFKA ENVIRONMENT------------------------------------------------------------------------
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.5.0
+    ports:
+      - 2181:2181
+    networks: 
+      - docker_network
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    container_name: sn-zookeeper
+
+
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    depends_on:
+      - kafka
+    restart: "no"
+    ports:
+      - "9000:9000"
+    networks: 
+      - docker_network
+    environment:
+      KAFKA_BROKERCONNECT: "kafka:9093"
+      JVM_OPTS: "-Xms16M -Xmx48M -Xss180K -XX:-TieredCompilation -XX:+UseStringDeduplication -noverify"
+
+  kafka:
+    image: confluentinc/cp-kafka:5.5.3
+    container_name: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:9092
+    expose: 
+      - "9093"   
+    networks: 
+      - docker_network
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9093,OUTSIDE://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9093,OUTSIDE://0.0.0.0:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      #KAFKA_CREATE_TOPICS: "smartDataRequest:1:1,smartDataReply:1:1,anomalyRequest:1:1,anomalyReply:1:1"
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      
+      #for larger messages than 1 MB
+      KAFKA_REPLICA_FETCH_MAX_BYTES: 15728640
+      KAFKA_MESSAGE_MAX_BYTES: 15728640
+      KAFKA_LOG_RETENTION_BYTES: 6000000
+      #KAFKA_PRODUCER_MAX_REQUEST_SIZE: 5048576
+      #KAFKA_CONSUMER_MAX_PARTITION_FETCH_BYTES: 50048576
+
+      #CONNECT_PRODUCER_MAX_REQUEST_SIZE: 5048576
+      #CONNECT_CONSUMER_MAX_PARTITION_FETCH_BYTES: 5048576
+
+  control-center:
+    image: confluentinc/cp-enterprise-control-center:5.3.0
+    hostname: control-center
+    ports:
+      - "9021:9021"
+    environment:
+      CONTROL_CENTER_ZOOKEEPER_CONNECT: "zookeeper:2181"
+      CONTROL_CENTER_BOOTSTRAP_SERVERS: "kafka:9093"
+      CONTROL_CENTER_REPLICATION_FACTOR: 1
+      CONTROL_CENTER_CONNECT_CLUSTER: "connect:8083"
+      CONTROL_CENTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+    networks: 
+        - docker_network
+    depends_on:
+      - zookeeper
+      - schema-registry
+      - kafka
+      - connect
+
+
+  connect:
+    image: confluentinc/cp-kafka-connect:5.3.0
+    container_name: connect
+    ports:
+      - "8083:8083"
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: "kafka:9093"
+      CONNECT_REST_PORT: 8083
+      CONNECT_GROUP_ID: "connect-group"
+      CONNECT_CONFIG_STORAGE_TOPIC: "connect-configs"
+      CONNECT_OFFSET_STORAGE_TOPIC: "connect-offsets"
+      CONNECT_STATUS_STORAGE_TOPIC: "connect-status"
+      CONNECT_KEY_CONVERTER: "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_KEY_CONVERTER_SCHEMA_REGISTRY_URL: "http://schema-registry:8081"
+      CONNECT_VALUE_CONVERTER:  "org.apache.kafka.connect.storage.StringConverter"
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
+      CONNECT_INTERNAL_KEY_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_INTERNAL_VALUE_CONVERTER: "org.apache.kafka.connect.json.JsonConverter"
+      CONNECT_REST_ADVERTISED_HOST_NAME: "connect"
+      CONNECT_LOG4J_ROOT_LOGLEVEL: "INFO"
+      CONNECT_LOG4J_LOGGERS: "org.apache.kafka.connect.runtime.rest=WARN,org.reflections=ERROR,io.zeebe.kafka.connect=TRACE,io.zeebe.client=WARN"
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+      CONNECT_PLUGIN_PATH: '/usr/share/java,/etc/kafka-connect/jars'
+    volumes:
+      - ./docker-kafka-connect-zeebe/connectors:/etc/kafka-connect/jars/
+    networks:
+      - docker_network
+    depends_on:
+      - schema-registry
+      - kafka
+      - zeebe
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:5.3.0
+    container_name: schema-registry
+    ports:
+      - "8085:8081"
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: PLAINTEXT://kafka:9093
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+    networks:
+      - docker_network
+    depends_on:
+      - zookeeper
+      - kafka
+#-----------------------------------------------SMART DATA SERVICE-----------------------------------------------------------------------
+  
+  ontop: #defines mappings between relational database (postgres) and the ontology (PETIont). Here we use it for sensor data integration.
+    image: ontop/ontop-endpoint
+    depends_on:
+      - db
+      - rdf4j
+    container_name: ontop
+    environment:
+      ONTOP_ONTOLOGY_FILE: /opt/ontop/input/sosa.ttl
+      ONTOP_MAPPING_FILE: /opt/ontop/input/sosa.obda
+      ONTOP_PROPERTIES_FILE: /opt/ontop/input/sosa_docker.properties
+      #ONTOP_PORTAL_FILE: /opt/ontop/input/university-complete.portal.toml
+      ONTOP_CORS_ALLOWED_ORIGINS: "*"
+      ONTOP_DEV_MODE: "true"
+      ONTOP_LAZY_INIT: "true"
+    volumes:
+      - ./Services/SmartDataService/ontopFiles/input:/opt/ontop/input
+      - ./Services/SmartDataService/ontopFiles/jdbc:/opt/ontop/jdbc
+    ports:
+      - "8082:8080"
+    networks: 
+      - docker_network
+
+  
+  db: #postgres holds the time series data (sensor data) which is mapped into the ontology via ontop
+    image: postgres:9.6.15
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    networks: 
+      - docker_network
+
+    volumes:
+      - ./Services/SmartDataService/Postgres/datadir:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: sensorData
+      POSTGRES_PASSWORD: password
+
+  
+  adminer: #visual administration of postgres
+    image: adminer
+    container_name: adminer
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 8081:8080
+    networks: 
+      - docker_network
+
+  rdf4j:
+    image: eclipse/rdf4j-workbench:amd64-latest
+    container_name: rdf4j
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      - docker_network
+    volumes:
+      - ./Services/SmartDataService/rdf4j/data:/var/rdf4j
+      - ./Services/SmartDataService/rdf4j/logs:/usr/local/tomcat/logs
+
+
+  smart-service-endpoint:
+    image: smart-service-endpoint
+    build: ./Services/SmartDataService
+    depends_on:
+      - kafka
+    container_name: smartservice
+    networks: 
+      - docker_network
+    volumes:
+      - ./Services/SmartDataService/src:/usr/src/app
+    #command: python main_testService.py
+
+  #-----------------------------------------------Anomaly Detection Service-----------------------------------------------------------------------
+
+  anomaly-store:
+    image: stain/jena-fuseki
+    container_name: fuseki_anomaly
+    ports:
+      - 3031:3030
+    environment:
+      ADMIN_PASSWORD: 123
+    networks: 
+      - docker_network
+    volumes:
+      - ./Services/AnomalyDetectionService/fuseki:/fuseki
+
+
+  anomaly-detection-service-endpoint:
+    image: anomaly-detection-endpoint
+    build: ./Services/AnomalyDetectionService
+    depends_on:
+      - kafka
+    container_name: anomalydetection
+    networks: 
+      - docker_network
+    volumes:
+      - ./Services/AnomalyDetectionService/src:/usr/src/app
+
+#-------------------------------------------------Zeebe---------------------------------------------------
+#--------------------------------------------------------------------------------------------
+  zeebe:
+    image: camunda/zeebe:0.26.0
+    container_name: zeebe
+    environment:
+      - ZEEBE_LOG_LEVEL=debug
+    ports:
+      - "26500:26500"
+      - "9600:9600"
+    volumes:
+      - zeebe_data:/usr/local/zeebe/data
+      - ./zeebe-docker-compose-master/operate/application.yaml:/usr/local/zeebe/config/application.yaml
+    depends_on:
+      - elasticsearch
+    networks:
+      - docker_network
+
+  operate:
+    image: camunda/operate:0.26.0
+    container_name: operate
+    ports:
+      - "8084:8080"
+    depends_on:
+      - zeebe
+      - elasticsearch
+    volumes:
+      - ./zeebe-docker-compose-master/lib/application.yml:/usr/local/operate/config/application.yml
+    networks:
+      - docker_network
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.7.1
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
+    environment:
+      - discovery.type=single-node
+      - cluster.name=elasticsearch
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    #volumes:
+    #  - zeebe_elasticsearch_data:/usr/share/elasticsearch/data
+    networks:
+      - docker_network
+
+
+
+
+    
+
+      

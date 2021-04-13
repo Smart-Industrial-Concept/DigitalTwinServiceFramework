@@ -1,0 +1,21 @@
+@prefix fedx: <http://rdf4j.org/config/federation#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#federatedendpoint> a rep:Repository;
+  rep:repositoryID "federatedendpoint";
+  rep:repositoryImpl [
+      fedx:member fedx:petiont, fedx:remoteanomaly, fedx:remoteontop;
+      rep:repositoryType "fedx:FedXRepository"
+    ];
+  rdfs:label "Federated SPARQL Endpoint" .
+
+fedx:petiont fedx:repositoryName "petiont";
+  fedx:store "ResolvableRepository" .
+
+fedx:remoteanomaly fedx:repositoryName "remoteanomaly";
+  fedx:store "ResolvableRepository" .
+
+fedx:remoteontop fedx:repositoryName "remoteontop";
+  fedx:store "ResolvableRepository" .

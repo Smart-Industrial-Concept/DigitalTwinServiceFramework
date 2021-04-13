@@ -1,0 +1,5 @@
+172.22.0.1 - - [26/Feb/2021:09:16:27 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 200 329
+172.22.0.1 - - [26/Feb/2021:09:16:43 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 200 334
+172.22.0.1 - - [26/Feb/2021:09:28:24 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 200 337
+172.22.0.1 - - [26/Feb/2021:10:06:50 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 200 330
+172.22.0.1 - - [26/Feb/2021:10:07:33 +0000] "POST /rdf4j-server/repositories/federatedendpoint HTTP/1.1" 200 337
