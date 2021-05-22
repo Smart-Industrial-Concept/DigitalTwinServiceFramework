@@ -1,0 +1,8 @@
+rdflib
+rdflib-jsonld
+kafka-python
+pandas
+numpy
+pyprog
+requests
+SPARQLWrapper

@@ -1,0 +1,13 @@
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rep: <http://www.openrdf.org/config/repository#> .
+@prefix sparql: <http://www.openrdf.org/config/repository/sparql#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<#remoteeval> a rep:Repository;
+  rep:repositoryID "remoteeval";
+  rep:repositoryImpl [
+      rep:repositoryType "openrdf:SPARQLRepository";
+      sparql:query-endpoint <http://rdf4j-eval:8080/rdf4j-server/repositories/evalresutls>;
+      sparql:update-endpoint <http://rdf4j-eval:8080/rdf4j-server/repositories/evalresutls/statements>
+    ];
+  rdfs:label "Remote Evaluation Results" .

@@ -1,0 +1,8 @@
+@prefix peti: <http://auto.tuwien.ac.at/sic/PETIont#>.
+peti:incident_0 a peti:Incident.
+peti:incident_0 a peti:SensorFault.
+peti:incident_0 peti:hasRootCause <http://auto.tuwien.ac.at/sic/PETIont#m_in>.
+peti:incident_0 peti:hasRelatedAnomaly <http://auto.tuwien.ac.at/sic/PETIont#anomaly_m_in_1>.
+peti:incident_0 peti:hasRelatedAnomaly <http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_p_4>.
+peti:incident_0 peti:hasRelatedAnomaly <http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_sup_2>.
+peti:incident_0 peti:hasRelatedAnomaly <http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_hx_3>.

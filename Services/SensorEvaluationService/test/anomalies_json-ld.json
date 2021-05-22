@@ -1,0 +1,242 @@
+[
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_hx_3",
+        "@type": [
+            "http://www.w3.org/2006/time#Interval",
+            "http://auto.tuwien.ac.at/sic/PETIont#Anomaly"
+        ],
+        "http://www.w3.org/2006/time#hasBeginning": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_hx_3"
+            }
+        ],
+        "http://www.w3.org/2006/time#hasEnd": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_hx_3"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_sup_2",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T17:01:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_sup_2",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:45:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#m_in",
+        "http://auto.tuwien.ac.at/sic/PETIont#hasAnomaly": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_m_in_0"
+            },
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_m_in_1"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_m_in_0",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T10:47:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#T_p",
+        "http://auto.tuwien.ac.at/sic/PETIont#hasAnomaly": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_p_4"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_m_in_1",
+        "@type": [
+            "http://www.w3.org/2006/time#Interval",
+            "http://auto.tuwien.ac.at/sic/PETIont#Anomaly"
+        ],
+        "http://www.w3.org/2006/time#hasBeginning": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_m_in_1"
+            }
+        ],
+        "http://www.w3.org/2006/time#hasEnd": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_m_in_1"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_m_in_0",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T10:31:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_sup_2",
+        "@type": [
+            "http://www.w3.org/2006/time#Interval",
+            "http://auto.tuwien.ac.at/sic/PETIont#Anomaly"
+        ],
+        "http://www.w3.org/2006/time#hasBeginning": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_sup_2"
+            }
+        ],
+        "http://www.w3.org/2006/time#hasEnd": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_sup_2"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_m_in_1",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:42:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#T_hx",
+        "http://auto.tuwien.ac.at/sic/PETIont#hasAnomaly": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_hx_3"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_p_4",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:42:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_hx_3",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:58:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_p_4",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T17:01:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_hx_3",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:43:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_p_4",
+        "@type": [
+            "http://www.w3.org/2006/time#Interval",
+            "http://auto.tuwien.ac.at/sic/PETIont#Anomaly"
+        ],
+        "http://www.w3.org/2006/time#hasBeginning": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_T_p_4"
+            }
+        ],
+        "http://www.w3.org/2006/time#hasEnd": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_T_p_4"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_m_in_0",
+        "@type": [
+            "http://auto.tuwien.ac.at/sic/PETIont#Anomaly",
+            "http://www.w3.org/2006/time#Interval"
+        ],
+        "http://www.w3.org/2006/time#hasBeginning": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyStart_m_in_0"
+            }
+        ],
+        "http://www.w3.org/2006/time#hasEnd": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_m_in_0"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomalyEnd_m_in_1",
+        "@type": [
+            "http://www.w3.org/2006/time#Instant"
+        ],
+        "http://www.w3.org/2006/time#inXSDDateTimeStamp": [
+            {
+                "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
+                "@value": "2021-04-01T16:58:00"
+            }
+        ]
+    },
+    {
+        "@id": "http://auto.tuwien.ac.at/sic/PETIont#T_sup",
+        "http://auto.tuwien.ac.at/sic/PETIont#hasAnomaly": [
+            {
+                "@id": "http://auto.tuwien.ac.at/sic/PETIont#anomaly_T_sup_2"
+            }
+        ]
+    }
+]

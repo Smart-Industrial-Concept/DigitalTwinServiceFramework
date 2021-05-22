@@ -6,7 +6,7 @@
 <#federatedendpoint> a rep:Repository;
   rep:repositoryID "federatedendpoint";
   rep:repositoryImpl [
-      fedx:member fedx:petiont, fedx:remoteanomaly, fedx:remoteontop;
+      fedx:member fedx:petiont, fedx:remoteanomaly, fedx:remoteeval, fedx:remoteontop;
       rep:repositoryType "fedx:FedXRepository"
     ];
   rdfs:label "Federated SPARQL Endpoint" .
@@ -15,6 +15,9 @@ fedx:petiont fedx:repositoryName "petiont";
   fedx:store "ResolvableRepository" .
 
 fedx:remoteanomaly fedx:repositoryName "remoteanomaly";
+  fedx:store "ResolvableRepository" .
+
+fedx:remoteeval fedx:repositoryName "remoteeval";
   fedx:store "ResolvableRepository" .
 
 fedx:remoteontop fedx:repositoryName "remoteontop";

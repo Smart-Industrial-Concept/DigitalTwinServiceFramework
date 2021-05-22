@@ -235,7 +235,7 @@ def main():
         'replyTopic':replyTopic
         }
         
-        payload = {'reply': answer}
+        payload = {'anomalies': answer}
         message=header | payload
 
         logger.info("Sending reply message to "+ replyTopic +" with ID: "+ replyID)
